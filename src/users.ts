@@ -45,6 +45,10 @@ export class Users {
   };
 
   getUsersInChatRoom = (chatRoom: string) => {
-    return this.users.filter((user) => user.chatRoom === chatRoom);
+    return this.users.map((user) => {
+      if (user.chatRoom === chatRoom) {
+        return user.name;
+      }
+    });
   };
 }

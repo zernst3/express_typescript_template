@@ -37,6 +37,9 @@ module.exports = (io: any) => {
         socket.emit("message", emitMessage);
         socket.broadcast.to(user.chatRoom).emit("message", emitMessage);
 
+        socket.emit("userJoin", users.getUsersInChatRoom(chatRoom));
+        socket.broadcast.to(user.chatRoom).emit("userJoin", [user.name]);
+
         socket.join(user.chatRoom);
 
         callback();
@@ -68,9 +71,17 @@ module.exports = (io: any) => {
         };
 
         io.to(user.chatRoom).emit("message", emitMessage);
-      }
+        io.to(user.chatRoom).emit(
+          "userLeave",
+          users.getUsersInChatRoom(user.chatRoom)
+        );
 
-      users.removeUser(socket.id);
+        users.removeUser(socket.id);
+
+        socket.broadcast
+          .to(user.chatRoom)
+          .emit("userLeave", users.getUsersInChatRoom(user.chatRoom));
+      }
 
       console.log(`${socket.id} has left the server`);
     });
@@ -86,9 +97,13 @@ module.exports = (io: any) => {
         };
 
         io.to(user.chatRoom).emit("message", emitMessage);
-      }
 
-      users.removeUser(socket.id);
+        users.removeUser(socket.id);
+
+        socket.broadcast
+          .to(user.chatRoom)
+          .emit("userLeave", users.getUsersInChatRoom(user.chatRoom));
+      }
 
       console.log(`${socket.id} has left the server`);
     });
