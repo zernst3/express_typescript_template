@@ -45,7 +45,7 @@ module.exports = (io: any) => {
 
     socket.on("sendMessage", (message, callback) => {
       const user = users.getUser(parseInt(socket.id));
-
+      console.log(message);
       if (user) {
         const emitMessage: Message = {
           user: user.name,
@@ -58,7 +58,7 @@ module.exports = (io: any) => {
       callback();
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnectFromServer", () => {
       console.log(`${socket.id} has left the server`);
     });
   });
