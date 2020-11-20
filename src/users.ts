@@ -1,6 +1,6 @@
 export interface User {
   name: string;
-  id: number;
+  id: string;
   chatRoom: string;
   language: string;
 }
@@ -13,11 +13,10 @@ export class Users {
   };
 
   addUser = ({ id, name, chatRoom, language }: User) => {
-    name = name.trim().toLowerCase();
-    chatRoom = chatRoom.trim().toLowerCase();
-
     const existingUser = this.users.find(
-      (user) => user.chatRoom === chatRoom && user.name === name
+      (user) =>
+        user.chatRoom.trim().toLowerCase() === chatRoom.trim().toLowerCase() &&
+        user.name.trim().toLowerCase() === name.trim().toLowerCase()
     );
 
     if (existingUser) {
@@ -33,7 +32,7 @@ export class Users {
     return { user };
   };
 
-  removeUser = (id: number) => {
+  removeUser = (id: string) => {
     const idx = this.users.findIndex((user) => user.id === id);
 
     if (idx !== -1) {
@@ -41,7 +40,7 @@ export class Users {
     }
   };
 
-  getUser = (id: number) => {
+  getUser = (id: string) => {
     return this.users.find((user) => user.id === id);
   };
 

@@ -17,7 +17,7 @@ module.exports = (io: any) => {
 
     socket.on("login", ({ name, chatRoom, language }, callback) => {
       const { user, error } = users.addUser({
-        id: parseInt(socket.id),
+        id: socket.id,
         name,
         chatRoom,
         language,
@@ -29,8 +29,8 @@ module.exports = (io: any) => {
 
       if (user) {
         const emitMessage: Message = {
-          user: "admin",
-          text: `${user.name}, welcome to the room ${user.chatRoom}`,
+          user: "Admin",
+          text: `${name}, welcome to the room: ${chatRoom}`,
           language: "English",
         };
 
@@ -44,8 +44,7 @@ module.exports = (io: any) => {
     });
 
     socket.on("sendMessage", (message, callback) => {
-      const user = users.getUser(parseInt(socket.id));
-      console.log(message);
+      const user = users.getUser(socket.id);
       if (user) {
         const emitMessage: Message = {
           user: user.name,
@@ -59,6 +58,38 @@ module.exports = (io: any) => {
     });
 
     socket.on("disconnectFromServer", () => {
+      const user = users.getUser(socket.id);
+
+      if (user) {
+        const emitMessage: Message = {
+          user: "Admin",
+          text: `${user.name} has left the chat room`,
+          language: "English",
+        };
+
+        io.to(user.chatRoom).emit("message", emitMessage);
+      }
+
+      users.removeUser(socket.id);
+
+      console.log(`${socket.id} has left the server`);
+    });
+
+    socket.on("disconnect", () => {
+      const user = users.getUser(socket.id);
+
+      if (user) {
+        const emitMessage: Message = {
+          user: "Admin",
+          text: `${user.name} has left the chat room`,
+          language: "English",
+        };
+
+        io.to(user.chatRoom).emit("message", emitMessage);
+      }
+
+      users.removeUser(socket.id);
+
       console.log(`${socket.id} has left the server`);
     });
   });
