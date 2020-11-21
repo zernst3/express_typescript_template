@@ -7,7 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon dist/index.js",
     "build:dev": "tsc --watch --preserveWatchOutput",
-    "dev": "nodemon --watch 'src/**/*' -e 'ts' --exec 'ts-node' src/index.ts"
+    "dev": "nodemon --watch 'src/**/*' -e 'ts' --exec 'ts-node' src/index.ts",
+    "postinstall": "tsc",
+    "watch-node": "nodemon dist/index.js",
+    "watch-ts": "tsc -w",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+  },
+  "engines": {
+    "node": "12.18.4"
   },
   "keywords": [],
   "author": "",
