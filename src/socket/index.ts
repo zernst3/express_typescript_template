@@ -31,14 +31,16 @@ module.exports = (io: any) => {
         const emitMessage: Message = {
           user: "Admin",
           text: `${name}, welcome to the room: ${chatRoom}`,
-          language: "English",
+          language: "en",
         };
 
         socket.emit("message", emitMessage);
         socket.broadcast.to(user.chatRoom).emit("message", emitMessage);
 
-        socket.emit("userJoin", users.getUsersInChatRoom(chatRoom));
-        socket.broadcast.to(user.chatRoom).emit("userJoin", [user.name]);
+        socket.emit("userData", users.getUsersInChatRoom(chatRoom));
+        socket.broadcast
+          .to(user.chatRoom)
+          .emit("userData", users.getUsersInChatRoom(chatRoom));
 
         socket.join(user.chatRoom);
 
@@ -67,20 +69,16 @@ module.exports = (io: any) => {
         const emitMessage: Message = {
           user: "Admin",
           text: `${user.name} has left the chat room`,
-          language: "English",
+          language: "en",
         };
 
         io.to(user.chatRoom).emit("message", emitMessage);
-        io.to(user.chatRoom).emit(
-          "userLeave",
-          users.getUsersInChatRoom(user.chatRoom)
-        );
 
         users.removeUser(socket.id);
 
         socket.broadcast
           .to(user.chatRoom)
-          .emit("userLeave", users.getUsersInChatRoom(user.chatRoom));
+          .emit("userData", users.getUsersInChatRoom(user.chatRoom));
       }
 
       console.log(`${socket.id} has left the server`);
@@ -93,7 +91,7 @@ module.exports = (io: any) => {
         const emitMessage: Message = {
           user: "Admin",
           text: `${user.name} has left the chat room`,
-          language: "English",
+          language: "en",
         };
 
         io.to(user.chatRoom).emit("message", emitMessage);
@@ -102,7 +100,7 @@ module.exports = (io: any) => {
 
         socket.broadcast
           .to(user.chatRoom)
-          .emit("userLeave", users.getUsersInChatRoom(user.chatRoom));
+          .emit("userData", users.getUsersInChatRoom(user.chatRoom));
       }
 
       console.log(`${socket.id} has left the server`);
