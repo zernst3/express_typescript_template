@@ -1,11 +1,11 @@
 // types
 import { Socket } from "socket.io";
-
 import { Users, User } from "../users";
+import { getMessage, getError } from "./translation";
 
 const users: Users = new Users();
 
-interface Message {
+export interface Message {
   user: string;
   text: string;
   language: string;
@@ -24,15 +24,12 @@ module.exports = (io: any) => {
       });
 
       if (error) {
-        return callback(error);
+        const emitMessage: Message = getError(language);
+        socket.emit("message", emitMessage);
       }
 
       if (user) {
-        const emitMessage: Message = {
-          user: "Admin",
-          text: `${name}, welcome to the room: ${chatRoom}`,
-          language: "en",
-        };
+        const emitMessage: Message = getMessage(name, language);
 
         socket.emit("message", emitMessage);
         socket.broadcast.to(user.chatRoom).emit("message", emitMessage);
