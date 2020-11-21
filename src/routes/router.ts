@@ -9,4 +9,6 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.json("Server is running");
 });
 
+router.use("/translate", require("./translate"));
+
 module.exports = router;

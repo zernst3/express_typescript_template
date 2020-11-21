@@ -1,7 +1,7 @@
 // types
 import { Socket } from "socket.io";
 import { Users, User } from "../users";
-import { getMessage, getError } from "./translation";
+import { getMessage, getError } from "../translation";
 
 const users: Users = new Users();
 

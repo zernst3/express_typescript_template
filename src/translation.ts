@@ -1,4 +1,4 @@
-import { Message } from "./index";
+import { Message } from "./socket";
 
 interface languageObject {
   [key: string]: Message;

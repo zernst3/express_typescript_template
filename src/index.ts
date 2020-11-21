@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import { PORT } from "./config/constants";
 const cors = require("cors");
+require("dotenv").config();
 
 const socketio = require("socket.io");
 const router = require("./routes/router");
