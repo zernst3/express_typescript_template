@@ -15,7 +15,7 @@ const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
     // allRoutes: true,
-    origin: "https://zernst-typescript-chat-app-s.herokuapp.com/",
+    origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["content-type"],
     // allowedHeaders: ["my-custom-header"],
