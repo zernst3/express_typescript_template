@@ -15,9 +15,9 @@ const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
     allRoutes: true,
-    origin: "*",
+    origin: PORT,
     methods: ["GET", "POST"],
-    // allowedHeaders: ["my-custom-header"],
+    allowedHeaders: ["my-custom-header"],
     credentials: true,
   },
 });
