@@ -46,7 +46,7 @@ export class Users {
 
   getUsersInChatRoom = (chatRoom: string) => {
     return this.users.map((user) => {
-      if (user.chatRoom === chatRoom) {
+      if (user.chatRoom === chatRoom && user.name) {
         return user.name;
       }
     });
