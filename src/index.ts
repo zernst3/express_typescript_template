@@ -17,6 +17,7 @@ const io = socketio(server, {
     origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["content-type"],
+  },
 });
 
 // handle sockets
