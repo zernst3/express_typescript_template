@@ -14,13 +14,9 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
-    // allRoutes: true,
     origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["content-type"],
-    // allowedHeaders: ["my-custom-header"],
-    // credentials: true,
-  },
 });
 
 // handle sockets
