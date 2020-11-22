@@ -14,6 +14,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
+    allRoutes: true,
     origin: PORT,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
