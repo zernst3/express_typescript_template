@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import Axios from "axios";
 
 const router = require("express").Router();
+
 const { v4: uuidv4 } = require("uuid");
 
 let AZURESUBSCRIPTIONKEY = process.env.AZURESUBSCRIPTIONKEY || undefined;
@@ -15,7 +16,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     const { sourceLanguage, messageText, targetLanguage } = req.body;
 
     if (!AZURESUBSCRIPTIONKEY || !AZUREENDPOINT || !LOCATION) {
-      res.send(`(Translation service unavailable) ${messageText}`);
+      res.send(`translationUnavailable`);
     }
 
     const { data } = await Axios({
