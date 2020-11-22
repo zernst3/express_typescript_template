@@ -15,14 +15,11 @@ const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
     // allRoutes: true,
-    // origin: "*",
-    // methods: ["GET", "POST"],
+    origin: "https://zernst-typescript-chat-app-s.herokuapp.com/",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["content-type"],
     // allowedHeaders: ["my-custom-header"],
     // credentials: true,
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
   },
 });
 
